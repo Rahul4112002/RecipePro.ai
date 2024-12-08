@@ -1,3 +1,8 @@
+
+
+https://github.com/user-attachments/assets/3cbc91e4-3244-44bb-9790-ff283f553536
+
+
 # RecipePro - AI-Based Recipe Generating System
 
 RecipePro is an intelligent recipe recommendation web application that uses the power of **Django**, **LangChain**, **Google Gemini**, **Generative AI**, and **Tailwind CSS** to provide personalized meal suggestions based on the user's input. Whether you are looking for recipes based on ingredients you have at home or tailored to your dietary preferences, RecipePro refines your search to offer the best recipe suggestions.
