@@ -1,4 +1,4 @@
-echo "# RecipePro - AI-Based Recipe Recommendation System
+# RecipePro - AI-Based Recipe Generating System
 
 RecipePro is an intelligent recipe recommendation web application that uses the power of **Django**, **LangChain**, **Google Gemini**, **Generative AI**, and **Tailwind CSS** to provide personalized meal suggestions based on the user's input. Whether you are looking for recipes based on ingredients you have at home or tailored to your dietary preferences, RecipePro refines your search to offer the best recipe suggestions.
 
@@ -90,8 +90,5 @@ Feel free to fork the repository and contribute by submitting pull requests. Iss
 4. Push to your forked repository.
 5. Open a pull request with a detailed description of your changes.
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details." > README.md
-```
 
-This will create the `README.md` file with the correct code block formatting.
+=
