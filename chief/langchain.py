@@ -31,6 +31,9 @@ def ask(recipe_message):
             recipe_text = "\n".join(response)  # Join list into a string
         else:
             recipe_text = str(response)  # Ensure it's a string
+            
+        # Remove any '*' symbols to avoid unwanted markdown formatting
+        recipe_text = recipe_text.replace('*', '')  # Removes all '*' symbols
 
         # Format the response for cleaner output
         recipe_text_lines = recipe_text.split('\n')

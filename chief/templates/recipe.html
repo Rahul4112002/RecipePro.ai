@@ -16,6 +16,79 @@
         function hideLoader() {
             document.getElementById("loader").style.display = "none";  // Hide the loader
         }
+        // Check if SpeechRecognition is supported
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US'; // Set language
+            recognition.interimResults = false; // Only final results
+            recognition.maxAlternatives = 1;
+
+            // Handle voice input start
+            function startVoiceInput() {
+                recognition.start();
+            }
+
+            // When speech is recognized
+            recognition.onresult = function (event) {
+                const speechToText = event.results[0][0].transcript; // Get the recognized text
+                document.getElementById('ingredients').value = speechToText; // Update input field
+            };
+
+            // Handle recognition errors
+            recognition.onerror = function (event) {
+                console.error('SpeechRecognition error:', event.error);
+                alert('Sorry, we couldn’t process your voice input. Please try again.');
+            };
+        } else {
+            // Inform the user that voice input is not supported
+            document.getElementById('mic-button').style.display = 'none';
+            console.warn('SpeechRecognition is not supported in this browser.');
+        }
+
+        // Declare the SpeechSynthesis object and utterance object globally
+        let synth = window.speechSynthesis;
+        let utterance = null;  // This will hold the current speech utterance
+
+        
+        // Text-to-Speech (TTS) function to read the recipe
+        function speakRecipe() {
+            const recipeElement = document.getElementById("recipe");
+            if (!recipeElement) {
+                console.error("Recipe element not found.");
+                alert("No recipe available to speak.");
+                return;
+            }
+    
+            // Extract the text content of the recipe
+            const recipeText = recipeElement.textContent || recipeElement.innerText;
+    
+            if (!recipeText.trim()) {
+                alert("No recipe available to speak.");
+                return;
+            }
+    
+            // Initialize the SpeechSynthesis API
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(recipeText);
+    
+            // Set the voice and other properties
+            utterance.lang = 'en-US';
+            utterance.rate = 1; // Speed of speech
+            utterance.pitch = 1; // Pitch of speech
+    
+            // Speak the recipe
+            synth.speak(utterance);
+    
+        }
+        // Stop function to halt speech
+        function stopRecipe() {
+            if (synth.speaking) {
+                synth.cancel();  // Stops the speech immediately
+                console.log("Speech stopped");
+            }
+        }
     </script>
 </head>
 <body class="bg-orange-100 h-full">
@@ -35,7 +108,17 @@
                             <div class="mb-4">
                                 <label class="block mb-2 font-mono font-bold text-2xl text-gray-700" for="ingredients">Describe your dish or enter ingredients</label>
                                 <textarea placeholder="E.g., Paneer, Butter, Spices" id="ingredients" name="recipe_message" required class="h-32 w-full rounded border bg-gray-200 px-4 py-2 text-gray-700 outline-none ring-orange-300 transition duration-100 focus:ring" >{{ input_data }}</textarea>
+                                <div class="mt-2 flex items-center">
+                                    <button 
+                                        type="button" 
+                                        id="mic-button" 
+                                        class="w-full px-2 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none" 
+                                        onclick="startVoiceInput()">
+                                        🎤 Tap to Speak
+                                    </button>
+                                </div>
                             </div>
+                            
                             <div>
                                 <button class="w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:bg-orange-700 focus:outline-none" type="submit">Generate Recipe</button>
                             </div>
@@ -47,9 +130,27 @@
                 <div class="w-full lg:w-2/3 px-4">
                     <div class="p-6 bg-white border bg-zinc-800 rounded-lg overflow-y-auto h-96">
                         <h2 class="mb-4 text-3xl text-center font-semibold text-white">Your Recipe</h2>
-                        <div class="text-gray-700">
+                        <!-- Add id="recipe" to this div -->
+                        <div id="recipe" class="text-gray-700">
                             {% if recipe %}
                                 <pre style="white-space: pre-wrap; color:aliceblue; font-family:monospace; font-size:larger" class="font-mono">{{ recipe|safe }}</pre>
+                                <!-- Add a button to trigger the speech -->
+                                <div class="mt-4 flex justify-center items-center">
+                                    <button 
+                                        onclick="speakRecipe()" 
+                                        class="rounded-lg bg-orange-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-orange-600 transition duration-100 hover:bg-orange-600 focus-visible:ring active:text-gray-700 md:text-base">
+                                        🔊 Speak Recipe
+                                    </button>
+                                </div>
+                                <!-- Add a Stop button below the Speak Recipe button -->
+                                <div class="mt-4 flex justify-center items-center">
+                                    <button 
+                                        onclick="stopRecipe()" 
+                                        class="rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-600 transition duration-100 hover:bg-red-600 focus-visible:ring active:text-gray-700 md:text-base">
+                                        🛑 Stop Speaking
+                                    </button>
+                                </div>
+
                             {% else %}
                                 <p class="text-white font-mono">No recipe generated yet. Enter ingredients and click "Generate Recipe".</p>
                             {% endif %}
