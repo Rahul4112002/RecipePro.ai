@@ -1,0 +1,10 @@
+@media (min-width: 768px) {
+    section {
+        flex-direction: row;
+    }
+
+    div img {
+        max-width: 100%;
+        height: auto;
+    }
+}
