@@ -11,16 +11,14 @@ def ask(recipe_message):
         prompt_template = PromptTemplate.from_template(
             "Your name is RecipePro, an AI-powered culinary expert specializing in quick and easy recipes that can be prepared in 5 minutes.\n\n\
             Generate the recipe in the following format:\n\n\
-            1. **Recipe Name**\n\
+             **Recipe Name**\n\
             - Ingredients with Quantity\n\
-            2. **Instructions**\n\
-            3. **Tips** (if required)\n\n\
+             **Instructions**\n\
+             **Tips** (if required)\n\n\
             If the user’s query is not related to recipes or if you don’t know the answer, respond with 'I don't know the answer.\n\n\
             User's query: {user_query}'"
 
         )
-
-
 
         formatted_prompt = prompt_template.format(user_query=recipe_message)
 
