@@ -89,12 +89,6 @@
                 console.log("Speech stopped");
             }
         }
-        function showFileName(event) {
-            const fileInput = event.target;
-            const fileNameDisplay = document.getElementById('file_name');
-            const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file selected';
-            fileNameDisplay.textContent = `Selected file: ${fileName}`;
-        }
     </script>
 </head>
 <body class="bg-orange-100 h-full">
@@ -114,20 +108,6 @@
                             <div class="mb-4">
                                 <label class="block mb-2 font-mono font-bold text-2xl text-gray-700" for="ingredients">Describe your dish or enter ingredients</label>
                                 <textarea placeholder="E.g., Paneer, Butter, Spices" id="ingredients" name="recipe_message" required class="h-32 w-full rounded border bg-gray-200 px-4 py-2 text-gray-700 outline-none ring-orange-300 transition duration-100 focus:ring" >{{ input_data }}</textarea>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-mono font-bold text-2xl text-gray-700" for="food_image">Upload a food image</label>
-                                    <div class="relative w-full">
-                                        <label for="food_image" class="cursor-pointer flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-gray-700 py-2 px-24 rounded shadow">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M16.707 9.293a1 1 0 00-1.414 0L11 13.586V3a1 1 0 10-2 0v10.586l-4.293-4.293a1 1 0 00-1.414 1.414l6 6a1 1 0 001.414 0l6-6a1 1 0 000-1.414z" />
-                                            </svg>
-                                            <span class="text-white">Upload</span>
-                                        </label>
-                                        <input id="food_image" name="food_image" type="file" class="sr-only" onchange="showFileName(event)">
-                                        <p id="file_name" class="mt-2 text-gray-600"></p>
-                                    </div>
-                                </div>
-                                
                                 <div class="mt-2 flex items-center">
                                     <button 
                                         type="button" 
@@ -150,21 +130,10 @@
                 <div class="w-full lg:w-2/3 px-4">
                     <div class="p-6 bg-white border bg-zinc-800 rounded-lg overflow-y-auto h-96">
                         <h2 class="mb-4 text-3xl text-center font-semibold text-white">Your Recipe</h2>
-                        {% if recipe_image %}
-                            <div class="mb-4 text-center">
-                                <img src="{{ recipe_image }}" alt="Generated Dish" class="rounded-lg mx-auto max-h-48">
-                            </div>
-                        {% endif %}
                         <!-- Add id="recipe" to this div -->
                         <div id="recipe" class="text-gray-700">
                             {% if recipe %}
                                 <pre style="white-space: pre-wrap; color:aliceblue; font-family:monospace; font-size:larger" class="font-mono">{{ recipe|safe }}</pre>
-                                {% if image_url %}
-                                    <div style="flex: 1; text-align: center;">
-                                        <h2>Generated Image:</h2>
-                                        <img src="{{ image_url }}" alt="Generated Recipe Image" style="max-width: 100%; height: auto;">
-                                    </div>
-                                {% endif %}
                                 <!-- Add a button to trigger the speech -->
                                 <div class="mt-4 flex justify-center items-center">
                                     <button 
