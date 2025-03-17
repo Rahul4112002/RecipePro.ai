@@ -1,113 +1,144 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>RecipePro.ai</title>
-    <script>
-        // JavaScript to show/hide the loader spinner
-        function showLoader() {
-            document.getElementById("loader").style.display = "block";  // Show the loader
-        }
-
-        function hideLoader() {
-            document.getElementById("loader").style.display = "none";  // Hide the loader
-        }
-        // Check if SpeechRecognition is supported
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-        if (SpeechRecognition) {
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'en-US'; // Set language
-            recognition.interimResults = false; // Only final results
-            recognition.maxAlternatives = 1;
-
-            // Handle voice input start
-            function startVoiceInput() {
-                recognition.start();
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>RecipePro.ai</title>
+        <script>
+            // JavaScript to show/hide the loader spinner
+            function showLoader() {
+                document.getElementById("loader").style.display = "block";  // Show the loader
             }
-
-            // When speech is recognized
-            recognition.onresult = function (event) {
-                const speechToText = event.results[0][0].transcript; // Get the recognized text
-                document.getElementById('ingredients').value = speechToText; // Update input field
-            };
-
-            // Handle recognition errors
-            recognition.onerror = function (event) {
-                console.error('SpeechRecognition error:', event.error);
-                alert('Sorry, we couldn’t process your voice input. Please try again.');
-            };
-        } else {
-            // Inform the user that voice input is not supported
-            document.getElementById('mic-button').style.display = 'none';
-            console.warn('SpeechRecognition is not supported in this browser.');
-        }
-
-        // Declare the SpeechSynthesis object and utterance object globally
-        let synth = window.speechSynthesis;
-        let utterance = null;  // This will hold the current speech utterance
-
+    
+            function hideLoader() {
+                document.getElementById("loader").style.display = "none";  // Hide the loader
+            }
+            
+            // Check if SpeechRecognition is supported
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+            if (SpeechRecognition) {
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'en-US'; // Set language
+                recognition.interimResults = false; // Only final results
+                recognition.maxAlternatives = 1;
+    
+                // Handle voice input start
+                function startVoiceInput() {
+                    recognition.start();
+                }
+    
+                // When speech is recognized
+                recognition.onresult = function (event) {
+                    const speechToText = event.results[0][0].transcript; // Get the recognized text
+                    document.getElementById('ingredients').value = speechToText; // Update input field
+                };
+    
+                // Handle recognition errors
+                recognition.onerror = function (event) {
+                    console.error('SpeechRecognition error:', event.error);
+                    alert("Sorry, we couldn't process your voice input. Please try again.");
+                };
+            } else {
+                // Inform the user that voice input is not supported
+                document.getElementById('mic-button').style.display = 'none';
+                console.warn('SpeechRecognition is not supported in this browser.');
+            }
+    
+            // Preview the uploaded image
+            function previewImage(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('image-preview').src = e.target.result;
+                        document.getElementById('preview-container').style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+    
+            // Declare the SpeechSynthesis object and utterance object globally
+            let synth = window.speechSynthesis;
+            let utterance = null;  // This will hold the current speech utterance
+    
+            // Text-to-Speech (TTS) function to read the recipe
+            function speakRecipe() {
+                const recipeElement = document.getElementById("recipe");
+                if (!recipeElement) {
+                    console.error("Recipe element not found.");
+                    alert("No recipe available to speak.");
+                    return;
+                }
         
-        // Text-to-Speech (TTS) function to read the recipe
-        function speakRecipe() {
-            const recipeElement = document.getElementById("recipe");
-            if (!recipeElement) {
-                console.error("Recipe element not found.");
-                alert("No recipe available to speak.");
-                return;
+                // Extract the text content of the recipe
+                const recipeText = recipeElement.textContent || recipeElement.innerText;
+        
+                if (!recipeText.trim()) {
+                    alert("No recipe available to speak.");
+                    return;
+                }
+        
+                // Initialize the SpeechSynthesis API
+                const synth = window.speechSynthesis;
+                const utterance = new SpeechSynthesisUtterance(recipeText);
+        
+                // Set the voice and other properties
+                utterance.lang = 'en-US';
+                utterance.rate = 1; // Speed of speech
+                utterance.pitch = 1; // Pitch of speech
+        
+                // Speak the recipe
+                synth.speak(utterance);
             }
-    
-            // Extract the text content of the recipe
-            const recipeText = recipeElement.textContent || recipeElement.innerText;
-    
-            if (!recipeText.trim()) {
-                alert("No recipe available to speak.");
-                return;
+            
+            // Stop function to halt speech
+            function stopRecipe() {
+                if (synth.speaking) {
+                    synth.cancel();  // Stops the speech immediately
+                    console.log("Speech stopped");
+                }
             }
-    
-            // Initialize the SpeechSynthesis API
-            const synth = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(recipeText);
-    
-            // Set the voice and other properties
-            utterance.lang = 'en-US';
-            utterance.rate = 1; // Speed of speech
-            utterance.pitch = 1; // Pitch of speech
-    
-            // Speak the recipe
-            synth.speak(utterance);
-    
-        }
-        // Stop function to halt speech
-        function stopRecipe() {
-            if (synth.speaking) {
-                synth.cancel();  // Stops the speech immediately
-                console.log("Speech stopped");
+        </script>
+        <style>
+            /* Custom styles for better mobile responsiveness */
+            @media (max-width: 640px) {
+                .mobile-padding {
+                    padding-left: 0.75rem !important;
+                    padding-right: 0.75rem !important;
+                }
+                
+                .mobile-text {
+                    font-size: 1.5rem !important;
+                }
+                
+                .mobile-subtitle {
+                    font-size: 1.25rem !important;
+                }
             }
-        }
-    </script>
+        </style>
 </head>
-<body class="bg-orange-100 h-full">
-    <div class="bg-orange-100  py-6 sm:py-8 lg:py-12">
-        <div class="mx-auto max-w-screen-xl px-4 md:px-8">
-            <div class="flex justify-center items-center">
-                <img src="{% static 'images/food.png' %}" alt="Recipe Icon" class="h-24 w-24 md:h-32 md:w-32 mr-2 mb-2" />
-                <h1 class="text-3xl font-bold text-gray-800 md:text-5xl font-mono">Your AI-Powered Recipe Awaits!</h1>
+<body class="bg-orange-100 min-h-screen">
+    <div class="bg-orange-100 py-4 sm:py-6 lg:py-8">
+        <div class="mx-auto max-w-screen-xl px-3 sm:px-4 md:px-6">
+            <!-- Header with App Title -->
+            <div class="flex flex-col justify-center items-center text-center mb-4">
+                <img src="{% static 'images/food.png' %}" alt="Recipe Icon" class="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 mb-2" />
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 font-mono mobile-text">Your AI-Powered Recipe Awaits!</h1>
             </div>
-            <br>
-            <div class="flex flex-wrap -mx-4">
-                <!-- Input Form (left column) -->
-                <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0 ">
-                    <div class="p-6 bg-orange-300 py-8 border rounded-lg overflow-y-auto h-88">
-                        <form class="center p-6 bg-white border rounded-lg" action="{% url 'recipe' %}" method="POST" onsubmit="showLoader()">
+            
+            <div class="flex flex-col lg:flex-row -mx-2 sm:-mx-3">
+                <!-- Input Form (top column on mobile, left column on desktop) -->
+                <div class="w-full lg:w-1/3 px-2 sm:px-3 mb-4 lg:mb-0">
+                    <div class="p-3 sm:p-4 md:p-6 bg-orange-300 border rounded-lg overflow-y-auto">
+                        <form class="p-3 sm:p-4 md:p-5 bg-white border rounded-lg" action="{% url 'recipe' %}" method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
                             {% csrf_token %}
-                            <div class="mb-4">
-                                <label class="block mb-2 font-mono font-bold text-2xl text-gray-700" for="ingredients">Describe your dish or enter ingredients</label>
-                                <textarea placeholder="E.g., Paneer, Butter, Spices" id="ingredients" name="recipe_message" required class="h-32 w-full rounded border bg-gray-200 px-4 py-2 text-gray-700 outline-none ring-orange-300 transition duration-100 focus:ring" >{{ input_data }}</textarea>
+                            <div class="mb-3 sm:mb-4">
+                                <label class="block mb-2 font-mono font-bold text-xl sm:text-2xl text-gray-700 mobile-subtitle" for="ingredients">Describe your dish or enter ingredients</label>
+                                <textarea placeholder="E.g., Paneer, Butter, Spices" id="ingredients" name="recipe_message" class="h-24 sm:h-32 w-full rounded border bg-gray-200 px-3 py-2 text-gray-700 outline-none ring-orange-300 transition duration-100 focus:ring">{{ input_data }}</textarea>
                                 <div class="mt-2 flex items-center">
                                     <button 
                                         type="button" 
@@ -119,6 +150,17 @@
                                 </div>
                             </div>
                             
+                            <div class="mb-3 sm:mb-4">
+                                <label class="block mb-2 font-mono font-bold text-xl sm:text-2xl text-gray-700 mobile-subtitle" for="food_image">Upload a food image</label>
+                                <input id="food_image" name="food_image" type="file" accept="image/*" class="w-full text-gray-700 outline-none text-sm" onchange="previewImage(event)">
+                                
+                                <!-- Image preview container -->
+                                <div id="preview-container" class="mt-3 hidden">
+                                    <p class="text-sm text-gray-600 mb-1">Image Preview:</p>
+                                    <img id="image-preview" src="" alt="Preview" class="max-w-full h-auto max-h-32 sm:max-h-40 border rounded mx-auto">
+                                </div>
+                            </div>
+                            
                             <div>
                                 <button class="w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:bg-orange-700 focus:outline-none" type="submit">Generate Recipe</button>
                             </div>
@@ -126,33 +168,35 @@
                     </div>
                 </div>
 
-                <!-- Generated Recipe (right column) -->
-                <div class="w-full lg:w-2/3 px-4">
-                    <div class="p-6 bg-white border bg-zinc-800 rounded-lg overflow-y-auto h-96">
-                        <h2 class="mb-4 text-3xl text-center font-semibold text-white">Your Recipe</h2>
-                        <!-- Add id="recipe" to this div -->
+                <!-- Generated Recipe (bottom column on mobile, right column on desktop) -->
+                <div class="w-full lg:w-2/3 px-2 sm:px-3">
+                    <div class="p-3 sm:p-4 md:p-6 bg-zinc-800 border rounded-lg overflow-y-auto h-64 sm:h-72 md:h-80 lg:h-96">
+                        <h2 class="mb-3 sm:mb-4 text-2xl sm:text-3xl text-center font-semibold text-white mobile-subtitle">Your Recipe</h2>
+                        
+                        <!-- Recipe Display -->
                         <div id="recipe" class="text-gray-700">
                             {% if recipe %}
-                                <pre style="white-space: pre-wrap; color:aliceblue; font-family:monospace; font-size:larger" class="font-mono">{{ recipe|safe }}</pre>
-                                <!-- Add a button to trigger the speech -->
-                                <div class="mt-4 flex justify-center items-center">
-                                    <button 
-                                        onclick="speakRecipe()" 
-                                        class="rounded-lg bg-orange-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-orange-600 transition duration-100 hover:bg-orange-600 focus-visible:ring active:text-gray-700 md:text-base">
+
+                                <!-- Show Uploaded Image (If Available) -->
+                                {% if image_url %}
+                                    <div class="mt-4 text-center">
+                                        <img src="{{ image_url }}" alt="Uploaded Food" class="max-w-full h-auto max-h-40 sm:max-h-56 border rounded-lg mx-auto">
+                                    </div>
+                                {% endif %}
+                                    <br>
+                                <pre style="white-space: pre-wrap; color:aliceblue; font-family:monospace; font-size:medium; overflow-x: hidden;" class="font-mono sm:text-lg">{{ recipe|safe }}</pre>
+                        
+                                <!-- TTS Buttons -->
+                                <div class="mt-3 sm:mt-4 flex justify-center items-center flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                                    <button onclick="speakRecipe()" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 w-full sm:w-auto">
                                         🔊 Speak Recipe
                                     </button>
-                                </div>
-                                <!-- Add a Stop button below the Speak Recipe button -->
-                                <div class="mt-4 flex justify-center items-center">
-                                    <button 
-                                        onclick="stopRecipe()" 
-                                        class="rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-600 transition duration-100 hover:bg-red-600 focus-visible:ring active:text-gray-700 md:text-base">
+                                    <button onclick="stopRecipe()" class="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 w-full sm:w-auto">
                                         🛑 Stop Speaking
                                     </button>
                                 </div>
-
                             {% else %}
-                                <p class="text-white font-mono">No recipe generated yet. Enter ingredients and click "Generate Recipe".</p>
+                                <p class="text-white font-mono text-center text-sm sm:text-base">No recipe generated yet. Enter ingredients, upload an image, or both, then click "Generate Recipe".</p>
                             {% endif %}
                         </div>
                     </div>
@@ -160,7 +204,7 @@
             </div>
             <div class="mt-4 flex justify-center items-center">
                 <a href="{% url 'home' %}" 
-                   class="rounded-lg bg-orange-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-orange-600 transition duration-100 hover:bg-orange-600 focus-visible:ring active:text-gray-700 md:text-base">
+                   class="rounded-lg bg-orange-500 px-6 py-2 sm:px-8 sm:py-3 text-center text-sm font-semibold text-white outline-none ring-orange-600 transition duration-100 hover:bg-orange-600 focus-visible:ring active:text-gray-700 md:text-base">
                     Back to Home
                 </a>
             </div>
@@ -168,12 +212,12 @@
     </div>
 
     <!-- Loader spinner -->
-    <div id="loader" role="status" style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <svg aria-hidden="true" class="w-12 h-12 text-gray-200 animate-spin dark:text-white fill-orange-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div id="loader" role="status" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50; background-color: rgba(0,0,0,0.5); padding: 1rem; border-radius: 0.5rem;">
+        <svg aria-hidden="true" class="w-10 h-10 sm:w-12 sm:h-12 text-gray-200 animate-spin dark:text-white fill-orange-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
         </svg>
-        <span class="sr-only"></span>
+        <span class="sr-only">Loading...</span>
     </div>
 </body>
 </html>

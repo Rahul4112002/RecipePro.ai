@@ -11,12 +11,13 @@
 <body>
     <div class="bg-white pb-6 sm:pb-8 lg:pb-12">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-            <header class="mt-4 ml-8 mr-8 mb-4 ">  
-                <div class="mx-auto flex max-w-screen-2xl items-center justify-between px-4 md:px-8">
-                    <!-- logo - start -->
-                    <a href="/" class="font-mono inline-flex items-center  text-2xl font-bold text-black md:text-3xl" aria-label="logo">
-                    <img class="h-12 md:h-12 mr-2" src="{% static 'images/chef.png' %}" alt="">
-                    Recipe<span class="text-orange-500">Pro</span>
+            <!-- Responsive header -->
+            <header class="mt-4 mx-auto mb-4 px-2 sm:px-8">  
+                <div class="mx-auto flex max-w-screen-2xl items-center justify-center sm:justify-between px-2 md:px-8">
+                    <!-- logo - centered on mobile, left-aligned on larger screens -->
+                    <a href="/" class="font-mono inline-flex items-center text-xl font-bold text-black sm:text-2xl md:text-3xl" aria-label="logo">
+                        <img class="h-10 sm:h-12 mr-2" src="{% static 'images/chef.png' %}" alt="">
+                        Recipe<span class="text-orange-500">Pro</span>
                     </a>   
                 </div>
                 <hr class="mt-4 border-t-2 border-orange-200">
@@ -25,17 +26,18 @@
             <section class="flex flex-col justify-between gap-6 sm:gap-10 md:gap-16 lg:flex-row">
                 <!-- content - start -->
                 <div class="flex flex-col justify-between xl:w-12/12">
-                    <div class="ml-10 mr-8 sm:text-center lg:py-12 lg:text-left xl:py-24">
-                        <p class="ml-6 mb-4 text-4xl font-semibold text-orange-500 md:mb-6 md:text-lg xl:text-5xl font-sans">Discover Recipes, Powered by AI</p>
+                    <div class="text-center px-4 py-6 sm:px-8 lg:py-12 lg:text-left xl:py-24">
+                        <p class="mb-4 text-3xl sm:text-4xl font-semibold text-orange-500 md:mb-6 md:text-lg xl:text-5xl font-sans">Discover Recipes, Powered by AI</p>
             
-                        <h1 class="ml-8 mb-8 text-xl text-black sm:text-3xl md:mb-4 md:text-base font-mono">Simplify your cooking journey with RecipePro! Enter your ingredients or preferences, and let our intelligent AI provide you with personalized, step-by-step recipes that suit your taste and lifestyle.</h1>
+                        <h1 class="mb-8 text-lg text-black sm:text-xl md:mb-4 md:text-base font-mono">Simplify your cooking journey with RecipePro! Enter your ingredients or preferences, and let our intelligent AI provide you with personalized, step-by-step recipes that suit your taste and lifestyle.</h1>
             
-                        <div class="ml-8  flex flex-col gap-2.5 sm:flex-row sm:justify-center lg:justify-start">
+                        <div class="flex flex-col gap-2.5 sm:flex-row justify-center lg:justify-start">
                             <a href="{% url 'recipe' %}" class="inline-block rounded-lg bg-orange-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-orange-600 focus-visible:ring active:bg-orange-700 md:text-base font-mono">Get Started</a>
                         </div>
                     </div>
+                    
                     <!-- social - start -->
-                    <div class="ml-24 mt-4 flex items-center justify-center gap-4 sm:mt-16 lg:justify-start">
+                    <div class="mt-8 flex items-center justify-center gap-4 sm:mt-16 lg:justify-start lg:ml-8">
                         <span class="text-sm font-semibold uppercase tracking-widest text-gray-400 sm:text-base">Social</span>
                         <span class="h-px w-12 bg-gray-200"></span>
             
@@ -70,17 +72,16 @@
                 <!-- content - end -->
         
                 <!-- image - start -->
-                <div style="width: 100%; height: auto; overflow: hidden; border-radius: 8px;">
+                <div class="mx-auto mt-6 lg:mt-0 w-full max-w-sm sm:max-w-md lg:max-w-lg">
                     <img 
                         src="{% static 'images/chef1.png' %}" 
                         loading="lazy" 
                         alt="Photo by Fakurian Design" 
-                        style="width: 100%; height: auto; max-width: 400px; display: block; margin: auto;" />
+                        class="w-full h-auto rounded-lg mx-auto" />
                 </div>
-            <!-- image - end -->
+                <!-- image - end -->
             </section>
         </div>
     </div>
-
 </body>
 </html>
