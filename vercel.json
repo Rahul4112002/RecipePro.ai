@@ -4,7 +4,10 @@
     {
       "src": "recipepro/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "config": { 
+        "maxLambdaSize": "50mb",
+        "runtime": "python3.9"
+      }
     }
   ],
   "routes": [
@@ -13,16 +16,8 @@
       "dest": "/static/$1"
     },
     {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "recipepro/wsgi.py"
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "recipepro.settings",
-    "PYTHONPATH": "$PYTHONPATH:$PWD"
-  }
+  ]
 }
