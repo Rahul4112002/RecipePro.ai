@@ -5,13 +5,6 @@
       "src": "recipepro/wsgi.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    },
-    {
-      "src": "build.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
     }
   ],
   "routes": [
@@ -31,10 +24,5 @@
   "env": {
     "DJANGO_SETTINGS_MODULE": "recipepro.settings",
     "PYTHONPATH": "$PYTHONPATH:$PWD"
-  },
-  "functions": {
-    "recipepro/wsgi.py": {
-      "includeFiles": "**"
-    }
   }
 }
