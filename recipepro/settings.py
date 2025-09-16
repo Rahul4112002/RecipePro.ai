@@ -9,12 +9,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b9toeezhz=t_z@cy8rs@sn+w5ac44!01smg$nngv9sgv=cr^n)'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-b9toeezhz=t_z@cy8rs@sn+w5ac44!01smg$nngv9sgv=cr^n)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['recipepro.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'recipepro-ai.vercel.app',
+    '.vercel.app',
+    'localhost', 
+    '127.0.0.1',
+    'recipepro.onrender.com'
+]
 
 
 # Application definition
@@ -70,6 +76,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Security settings for production
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 86400
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 
 # Password validation
