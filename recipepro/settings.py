@@ -14,18 +14,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-b9toeezhz=t_z@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = [
-    'recipepro-ai.vercel.app',
-    '.vercel.app',
-    'localhost', 
-    '127.0.0.1',
-    'recipepro.onrender.com'
-]
-
-# Vercel-specific settings
-if 'VERCEL' in os.environ:
-    ALLOWED_HOSTS = ['*']  # Allow all hosts in Vercel
-    DEBUG = False  # Force debug off in production
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -130,14 +119,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'chief/static'),
 ]
-
-# For Vercel deployment - static files are served differently
-if 'VERCEL' in os.environ:
-    STATIC_ROOT = None
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # MEDIA SETTINGS
 MEDIA_URL = "/media/"
