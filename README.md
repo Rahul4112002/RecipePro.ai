@@ -3,97 +3,145 @@
 https://github.com/user-attachments/assets/3cbc91e4-3244-44bb-9790-ff283f553536
 
 
-# RecipePro - AI-Based Recipe Generating System
+# 🍽️ RecipePro - AI-Powered Recipe Generator
 
-RecipePro is an intelligent recipe recommendation web application that uses the power of **Django**, **LangChain**, **Google Gemini**, **Generative AI**, and **Tailwind CSS** to provide personalized meal suggestions based on the user's input. Whether you are looking for recipes based on ingredients you have at home or tailored to your dietary preferences, RecipePro refines your search to offer the best recipe suggestions.
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
+[![Django](https://img.shields.io/badge/Django-5.1.4-green.svg)](https://djangoproject.com)
+[![AI Powered](https://img.shields.io/badge/AI-Groq%20API-orange.svg)](https://groq.com)
 
-## Features
-- **Personalized Recommendations**: Powered by Google Gemini's generative AI model, it tailors recipes based on ingredients, nutritional preferences, and more.
-- **Django Backend**: A robust and scalable backend built with Django, ensuring smooth user experience and secure data handling.
-- **Modern UI**: A clean, responsive design powered by **Tailwind CSS** for a seamless interface.
-- **AI Integration**: Uses LangChain to interface with the Google Gemini AI model to generate customized recipes.
-- **Real-time Deployment**: Hosted live on Render, so you can access the web app anywhere.
+Transform your cooking experience with AI-powered recipe generation! RecipePro creates personalized recipes from ingredients, voice input, or food images using cutting-edge artificial intelligence.
 
-## Live Demo
-You can try out the live version of the application here:  
-[RecipePro AI](https://recipepro-ai.onrender.com)
+## ✨ Features
 
-## Technology Stack
-- **Backend**: Django
-- **Frontend**: HTML, Tailwind CSS
-- **AI**: Google Gemini, LangChain
-- **Deployment**: Render (for web app hosting)
-- **Version Control**: GitHub
+### 🎤 **Voice Input**
+- Simply speak your ingredients or cravings
+- Advanced speech recognition technology
+- Hands-free cooking experience
 
-## Installation
+### 📸 **Image Recognition**  
+- Upload food photos to get instant recipes
+- AI analyzes dishes and recreates recipes
+- Supports multiple image formats
 
-To run this project locally, follow the steps below:
+### 🖼️ **AI-Generated Images**
+- Every recipe comes with beautiful AI-generated images
+- Multiple image sources: Pollinations, Prodia, Unsplash
+- Professional food photography quality
+
+### 🔊 **Audio Recipes**
+- Text-to-speech for hands-free cooking
+- Listen to instructions while cooking
+- Natural voice synthesis
+
+### 💾 **Recipe Management**
+- Save your favorite recipes locally
+- Browse and organize your collection
+- Quick access to saved recipes
+
+### 📤 **Easy Sharing**
+- Share recipes via social media
+- Copy to clipboard functionality
+- Multiple export formats
+
+## 🚀 Technology Stack
+
+- **Backend**: Django 5.1.4, Python 3.10+
+- **AI Integration**: Groq API (migrated from Google Gemini), LangChain
+- **Frontend**: TailwindCSS, JavaScript ES6+
+- **Speech**: Web Speech API
+- **Image Generation**: Pollinations.ai, Prodia, Unsplash APIs
+- **Database**: SQLite (development)
+
+## 🛠️ Installation
 
 ### Prerequisites
-- Python 3.8 or higher
-- pip (Python package installer)
-- Virtual environment (optional but recommended)
+- Python 3.10 or higher
+- pip (Python package manager)
+- Git
 
-### Steps to Run Locally
-1. **Clone the repository**:
+### Setup Instructions
+
+1. **Clone the Repository**
    ```bash
    git clone https://github.com/Rahul4112002/RecipePro.ai.git
    cd RecipePro.ai
-You can use the following command in your terminal to create the `README.md` file with the updated code block syntax:
+   ```
 
-```bash
-echo "## Installation
+2. **Create Virtual Environment**
+   ```bash
+   python -m venv venv
+   # Windows
+   venv\Scripts\activate
+   # Linux/Mac
+   source venv/bin/activate
+   ```
 
-### Create a virtual environment (optional):
-```bash
-python -m venv venv
-```
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Activate the virtual environment:
-- On Windows:
-```bash
-venv\\Scripts\\activate
-```
-- On macOS/Linux:
-```bash
-source venv/bin/activate
-```
+4. **Environment Configuration**
+   Create a `.env` file in the root directory:
+   ```bash
+   GROQ_API_KEY=your_groq_api_key_here
+   PRODIA_API_KEY=your_prodia_api_key_here  # Optional
+   UNSPLASH_ACCESS_KEY=your_unsplash_key_here  # Optional
+   SECRET_KEY=your_django_secret_key_here
+   ```
 
-### Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+5. **Database Setup**
+   ```bash
+   python manage.py migrate
+   python manage.py collectstatic
+   ```
 
-### Run migrations:
-```bash
-python manage.py migrate
-```
+6. **Run Development Server**
+   ```bash
+   python manage.py runserver
+   ```
 
-### Collect static files:
-```bash
-python manage.py collectstatic
-```
+7. **Access Application**
+   Open your browser and navigate to `http://127.0.0.1:8000`
 
-### Start the development server:
-```bash
-python manage.py runserver
-```
+## 🔑 API Keys Setup
 
-Open your browser and visit http://127.0.0.1:8000/ to view the app.
+### Required: Groq API Key
+1. Visit [Groq Console](https://console.groq.com)
+2. Create an account and generate an API key
+3. Add to `.env` file: `GROQ_API_KEY=your_key_here`
 
-## Configuration
-- The **SECRET_KEY** for the Django application is required. Make sure to set it up securely in your production environment.
-- For any AI-related queries, the project uses **Google Gemini** integrated through **LangChain** for the generative AI model. You'll need appropriate API keys for these services.
+### Optional: Enhanced Features
+- **Prodia API**: For AI image generation
+- **Unsplash API**: For stock food photos
 
-## Contributing
-Feel free to fork the repository and contribute by submitting pull requests. Issues and suggestions are always welcome!
+## 👨‍💻 Developer
 
-### How to contribute:
-1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Make the changes and commit.
-4. Push to your forked repository.
-5. Open a pull request with a detailed description of your changes.
+**Rahul Chauhan**
+- 🌐 Portfolio: [rahul4112.me](https://rahul4112.me)
+- 💻 GitHub: [@Rahul4112002](https://github.com/Rahul4112002)
+- 💼 LinkedIn: [Rahul Chauhan](https://linkedin.com/in/rahul-chauhan-932522230)
 
+## 🤝 Contributing
 
-=
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [Rahul Chauhan](https://rahul4112.me)**
+
+**🍽️ Transform your cooking with AI!**
+
+</div>

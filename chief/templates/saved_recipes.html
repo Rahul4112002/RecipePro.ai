@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>RecipePro - Saved Recipes</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .recipe-title { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-white to-amber-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm border-b border-orange-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="{% url 'home' %}" class="flex items-center space-x-3 group">
+                    <img class="h-10 w-10 rounded-full shadow-md group-hover:shadow-lg transition-shadow duration-200" src="{% static 'images/chef.png' %}" alt="RecipePro">
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Recipe<span class="text-orange-500">Pro</span></h1>
+                        <p class="text-xs text-gray-500">AI Recipe Generator</p>
+                    </div>
+                </a>
+                
+                <div class="flex space-x-4">
+                    <a href="{% url 'recipe' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Create Recipe
+                    </a>
+                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <div class="flex justify-center mb-6">
+                <div class="relative">
+                    <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full flex items-center justify-center shadow-xl">
+                        <span class="text-3xl">💾</span>
+                    </div>
+                    <div class="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
+                        <span id="recipe-count" class="text-xs font-bold text-white">0</span>
+                    </div>
+                </div>
+            </div>
+            <h1 class="recipe-title text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-500">Saved</span> Recipes
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Your personal collection of delicious recipes, saved locally on your device.
+            </p>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div id="recipes-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Saved recipes will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="text-center py-16 hidden">
+            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="text-4xl">📝</span>
+            </div>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">No Saved Recipes Yet</h3>
+            <p class="text-gray-600 mb-8 max-w-md mx-auto">
+                Start creating amazing recipes and save your favorites to build your personal cookbook!
+            </p>
+            <a href="{% url 'recipe' %}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                <span class="mr-2">✨</span>
+                Create Your First Recipe
+            </a>
+        </div>
+    </div>
+
+    <!-- Recipe Modal -->
+    <div id="recipe-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-gray-900">Recipe Details</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="modal-content" class="p-6">
+                <!-- Recipe content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load and display saved recipes
+        function loadSavedRecipes() {
+            const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '{}');
+            const recipesContainer = document.getElementById('recipes-container');
+            const emptyState = document.getElementById('empty-state');
+            const recipeCount = document.getElementById('recipe-count');
+            
+            const recipeIds = Object.keys(savedRecipes);
+            recipeCount.textContent = recipeIds.length;
+            
+            if (recipeIds.length === 0) {
+                emptyState.classList.remove('hidden');
+                recipesContainer.innerHTML = '';
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            // Sort recipes by timestamp (newest first)
+            const sortedRecipes = recipeIds.sort((a, b) => {
+                return new Date(savedRecipes[b].timestamp) - new Date(savedRecipes[a].timestamp);
+            });
+            
+            recipesContainer.innerHTML = sortedRecipes.map(recipeId => {
+                const recipe = savedRecipes[recipeId];
+                const date = new Date(recipe.timestamp);
+                const formattedDate = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                return `
+                    <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-orange-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-200 line-clamp-2">
+                                    ${recipe.title}
+                                </h3>
+                                <div class="flex space-x-2">
+                                    <button onclick="viewRecipe('${recipeId}')" class="text-blue-600 hover:text-blue-800 p-1" title="View Recipe">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                    </button>
+                                    <button onclick="deleteRecipe('${recipeId}')" class="text-red-600 hover:text-red-800 p-1" title="Delete Recipe">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-sm text-gray-500 mb-4">
+                                Saved on ${formattedDate}
+                            </div>
+                            
+                            <div class="recipe-preview text-sm text-gray-600 line-clamp-3">
+                                ${stripHtml(recipe.content).substring(0, 150)}...
+                            </div>
+                            
+                            <div class="mt-4 flex justify-between items-center">
+                                <button onclick="viewRecipe('${recipeId}')" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:shadow-md transition-all duration-200 text-sm font-medium">
+                                    View Recipe
+                                </button>
+                                <div class="flex space-x-2">
+                                    <button onclick="shareRecipeById('${recipeId}')" class="px-3 py-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200" title="Share Recipe">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Strip HTML tags for preview
+        function stripHtml(html) {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            return doc.body.textContent || "";
+        }
+        
+        // View recipe in modal
+        function viewRecipe(recipeId) {
+            const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '{}');
+            const recipe = savedRecipes[recipeId];
+            
+            if (recipe) {
+                document.getElementById('modal-content').innerHTML = recipe.content;
+                document.getElementById('recipe-modal').classList.remove('hidden');
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('recipe-modal').classList.add('hidden');
+        }
+        
+        // Delete recipe
+        function deleteRecipe(recipeId) {
+            if (confirm('Are you sure you want to delete this recipe?')) {
+                const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '{}');
+                delete savedRecipes[recipeId];
+                localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
+                loadSavedRecipes(); // Reload the list
+            }
+        }
+        
+        // Share recipe by ID
+        function shareRecipeById(recipeId) {
+            const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes') || '{}');
+            const recipe = savedRecipes[recipeId];
+            
+            if (recipe) {
+                const recipeText = stripHtml(recipe.content);
+                const title = `Check out this amazing recipe: ${recipe.title}`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: title,
+                        text: recipeText
+                    });
+                } else {
+                    navigator.clipboard.writeText(recipeText).then(() => {
+                        alert("Recipe copied to clipboard!");
+                    }).catch(() => {
+                        const shareText = encodeURIComponent(title + "\n\n" + recipeText);
+                        const whatsappUrl = `https://wa.me/?text=${shareText}`;
+                        window.open(whatsappUrl, '_blank');
+                    });
+                }
+            }
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('recipe-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Load recipes on page load
+        document.addEventListener('DOMContentLoaded', loadSavedRecipes);
+    </script>
+</body>
+</html>
