@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from chief.langchain import ask  # Import the ask function from langchain.py
+from chief.langchain import generate_recipe_from_text, generate_recipe_from_image, generate_recipe_image
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+import json
 
 def home(request):
     return render(request, 'home.html')  # Render the home page
@@ -43,15 +44,51 @@ def generate_recipe(request):
                 recipe = cached_data
                 generated_image_url = None
         else:
-            # Call the AI API with both text and image (if available)
-            result = ask(recipe_message, image_file)
-            
-            # Handle the new return format (recipe, generated_image_url)
-            if isinstance(result, tuple):
-                recipe, generated_image_url = result
+            # Generate recipe based on input type
+            if image_file:
+                # Generate recipe from image
+                result = generate_recipe_from_image(image_file)
             else:
-                recipe = result
+                # Generate recipe from text ingredients
+                ingredients_list = [ingredient.strip() for ingredient in recipe_message.split(',')]
+                result = generate_recipe_from_text(ingredients_list)
+            
+            # Check if there was an error
+            if isinstance(result, dict) and 'error' in result:
+                recipe = f"Error: {result['error']}"
                 generated_image_url = None
+            else:
+                # Format the recipe output
+                if isinstance(result, dict):
+                    recipe_parts = []
+                    if result.get('recipe_name'):
+                        recipe_parts.append(f"**{result['recipe_name']}**\n")
+                    
+                    if result.get('ingredients'):
+                        recipe_parts.append("**Ingredients:**")
+                        for ingredient in result['ingredients']:
+                            recipe_parts.append(f"• {ingredient}")
+                        recipe_parts.append("")
+                    
+                    if result.get('instructions'):
+                        recipe_parts.append("**Instructions:**")
+                        for i, instruction in enumerate(result['instructions'], 1):
+                            recipe_parts.append(f"{i}. {instruction}")
+                        recipe_parts.append("")
+                    
+                    if result.get('tips'):
+                        recipe_parts.append("**Tips:**")
+                        for tip in result['tips']:
+                            recipe_parts.append(f"• {tip}")
+                    
+                    recipe = "\n".join(recipe_parts)
+                    
+                    # Generate image for the recipe
+                    recipe_name = result.get('recipe_name', 'Generated Recipe')
+                    generated_image_url = generate_recipe_image(recipe_name)
+                else:
+                    recipe = str(result)
+                    generated_image_url = None
             
             # Save to session
             session_data[cache_key] = {

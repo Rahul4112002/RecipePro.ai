@@ -22,6 +22,11 @@ ALLOWED_HOSTS = [
     'recipepro.onrender.com'
 ]
 
+# Vercel-specific settings
+if 'VERCEL' in os.environ:
+    ALLOWED_HOSTS = ['*']  # Allow all hosts in Vercel
+    DEBUG = False  # Force debug off in production
+
 
 # Application definition
 
@@ -123,10 +128,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'chief/static'),  # Adjust this path to where your static files are located
+    os.path.join(BASE_DIR, 'chief/static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# For Vercel deployment - static files are served differently
+if 'VERCEL' in os.environ:
+    STATIC_ROOT = None
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # MEDIA SETTINGS
 MEDIA_URL = "/media/"
