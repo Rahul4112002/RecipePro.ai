@@ -11,6 +11,65 @@
         <style>
             body { font-family: 'Inter', sans-serif; }
             .recipe-title { font-family: 'Playfair Display', serif; }
+            
+            /* Enhanced Recipe Card Styles */
+            .recipe-card {
+                animation: fadeIn 0.6s ease-out;
+            }
+            
+            .recipe-card h1 {
+                font-family: 'Playfair Display', serif;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .recipe-card .ingredient-item {
+                transition: all 0.2s ease;
+            }
+            
+            .recipe-card .ingredient-item:hover {
+                transform: translateX(4px);
+                background-color: #f0fdf4;
+            }
+            
+            .recipe-card .instruction-step {
+                transition: all 0.2s ease;
+            }
+            
+            .recipe-card .instruction-step:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+            
+            .recipe-card .tip-item {
+                transition: all 0.2s ease;
+            }
+            
+            .recipe-card .tip-item:hover {
+                background-color: #fffbeb;
+                border-color: #f59e0b;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateX(-20px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            
+            .recipe-card .ingredient-item {
+                animation: slideIn 0.4s ease-out forwards;
+            }
+            
+            .recipe-card .instruction-step {
+                animation: slideIn 0.5s ease-out forwards;
+            }
+            
+            .recipe-card .tip-item {
+                animation: slideIn 0.3s ease-out forwards;
+            }
         </style>
         <script>
             // JavaScript to show/hide the loader spinner
@@ -109,7 +168,7 @@
                     
                     // Visual feedback
                     micButton.classList.add('listening');
-                    micButton.innerHTML = '🔴 Listening... (Tap to stop)';
+                    micButton.innerHTML = 'Listening... (Tap to stop)';
                     isListening = true;
                     
                     // Show interim transcription
@@ -137,7 +196,7 @@
                     const ingredientInput = document.getElementById('ingredient-input');
                     
                     micButton.classList.remove('listening');
-                    micButton.innerHTML = '🎤 Tap to Speak';
+                    micButton.innerHTML = 'Tap to Speak';
                     ingredientInput.placeholder = 'Type ingredient and press Enter...';
                     isListening = false;
                 }
@@ -301,7 +360,7 @@
                         synth.cancel();
                     }
                     isReading = false;
-                    button.innerHTML = '<span class="mr-1">🔊</span>Listen to Recipe';
+                    button.innerHTML = 'Listen to Recipe';
                     button.className = button.className.replace('from-red-500 to-red-600', 'from-blue-500 to-blue-600');
                 } else {
                     // Start reading
@@ -330,20 +389,20 @@
                     // Handle speech end
                     utterance.onend = function() {
                         isReading = false;
-                        button.innerHTML = '<span class="mr-1">🔊</span>Listen to Recipe';
+                        button.innerHTML = 'Listen to Recipe';
                         button.className = button.className.replace('from-red-500 to-red-600', 'from-blue-500 to-blue-600');
                     };
                     
                     // Handle speech error
                     utterance.onerror = function() {
                         isReading = false;
-                        button.innerHTML = '<span class="mr-1">🔊</span>Listen to Recipe';
+                        button.innerHTML = 'Listen to Recipe';
                         button.className = button.className.replace('from-red-500 to-red-600', 'from-blue-500 to-blue-600');
                     };
             
                     // Update button appearance
                     isReading = true;
-                    button.innerHTML = '<span class="mr-1">🛑</span>Stop Reading';
+                    button.innerHTML = 'Stop Reading';
                     button.className = button.className.replace('from-blue-500 to-blue-600', 'from-red-500 to-red-600');
                     
                     // Speak the recipe
@@ -426,7 +485,7 @@
                 // Update save button temporarily
                 const saveButton = event.target.closest('button');
                 const originalHTML = saveButton.innerHTML;
-                saveButton.innerHTML = '<span class="mr-1">✓</span>Saved!';
+                saveButton.innerHTML = 'Saved!';
                 saveButton.className = saveButton.className.replace('from-purple-500 to-purple-600', 'from-green-500 to-green-600');
                 
                 setTimeout(() => {
@@ -440,6 +499,213 @@
                 const titleMatch = html.match(/<div class="recipe-title">.*?<strong>(.*?)<\/strong>.*?<\/div>/);
                 return titleMatch ? titleMatch[1].replace('🍽️ ', '') : 'Untitled Recipe';
             }
+            
+            // Recipe formatting function
+            function formatRecipe() {
+                const rawRecipeElement = document.getElementById('raw-recipe');
+                const formattedRecipeElement = document.getElementById('formatted-recipe');
+                
+                if (!rawRecipeElement || !formattedRecipeElement) return;
+                
+                const rawText = rawRecipeElement.textContent.trim();
+                if (!rawText || rawText === 'No input provided.' || rawText.startsWith('Error:')) {
+                    formattedRecipeElement.innerHTML = `
+                        <div class="text-center py-8">
+                            <div class="text-6xl mb-4">🤔</div>
+                            <h3 class="text-xl font-semibold text-gray-600">${rawText}</h3>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Helper function to format bold text
+                function formatBoldText(text) {
+                    return text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>');
+                }
+                
+                // Parse the recipe text
+                const lines = rawText.split('\n').filter(line => line.trim());
+                let formattedHTML = '';
+                
+                let currentSection = '';
+                let recipeName = '';
+                let ingredients = [];
+                let instructions = [];
+                let tips = [];
+                
+                for (let line of lines) {
+                    line = line.trim();
+                    if (!line) continue;
+                    
+                    // Check for recipe name (bold text at the start)
+                    if (line.startsWith('**') && line.endsWith('**') && !recipeName) {
+                        recipeName = line.replace(/\*\*/g, '');
+                        continue;
+                    }
+                    
+                    // Check for section headers
+                    if (line.toLowerCase().includes('ingredients:')) {
+                        currentSection = 'ingredients';
+                        continue;
+                    } else if (line.toLowerCase().includes('instructions:')) {
+                        currentSection = 'instructions';
+                        continue;
+                    } else if (line.toLowerCase().includes('tips:')) {
+                        currentSection = 'tips';
+                        continue;
+                    }
+                    
+                    // Add content to appropriate sections
+                    if (currentSection === 'ingredients' && (line.startsWith('•') || line.startsWith('-'))) {
+                        ingredients.push(line.replace(/^[•-]\s*/, ''));
+                    } else if (currentSection === 'instructions' && /^\d+\./.test(line)) {
+                        instructions.push(line.replace(/^\d+\.\s*/, ''));
+                    } else if (currentSection === 'tips' && (line.startsWith('•') || line.startsWith('-'))) {
+                        tips.push(line.replace(/^[•-]\s*/, ''));
+                    } else if (!currentSection && line) {
+                        // This might be the recipe name or description
+                        if (!recipeName) recipeName = line;
+                    }
+                }
+                
+                // Build the formatted HTML
+                formattedHTML = `
+                    <div class="recipe-card">
+                        <!-- Recipe Header -->
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-full mb-4">
+                                <span class="text-3xl">🍽️</span>
+                            </div>
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">${recipeName || 'Your Custom Recipe'}</h1>
+                            <div class="flex justify-center items-center space-x-4 text-sm text-gray-500">
+                                <span class="flex items-center"><span class="mr-1">👨‍🍳</span> AI Generated</span>
+                                <span class="flex items-center"><span class="mr-1">⏱️</span> ${new Date().toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                `;
+                
+                // Add ingredients section
+                if (ingredients.length > 0) {
+                    formattedHTML += `
+                        <div class="mb-8">
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+                                <h2 class="text-2xl font-bold text-green-800 mb-4 flex items-center">
+                                    <span class="mr-2">🥗</span> Ingredients
+                                </h2>
+                                <div class="grid md:grid-cols-2 gap-3">
+                    `;
+                    
+                    ingredients.forEach((ingredient, index) => {
+                        const formattedIngredient = formatBoldText(ingredient);
+                        formattedHTML += `
+                            <div class="ingredient-item flex items-center space-x-3 p-3 bg-white rounded-lg border border-green-100 hover:shadow-md transition-shadow" style="animation-delay: ${index * 0.1}s">
+                                <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                                <span class="text-gray-700">${formattedIngredient}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    formattedHTML += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Add instructions section
+                if (instructions.length > 0) {
+                    formattedHTML += `
+                        <div class="mb-8">
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+                                <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                                    <span class="mr-2">👩‍🍳</span> Instructions
+                                </h2>
+                                <div class="space-y-4">
+                    `;
+                    
+                    instructions.forEach((instruction, index) => {
+                        const formattedInstruction = formatBoldText(instruction);
+                        formattedHTML += `
+                            <div class="instruction-step flex space-x-4 p-4 bg-white rounded-lg border border-blue-100 hover:shadow-md transition-shadow" style="animation-delay: ${index * 0.1}s">
+                                <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                    ${index + 1}
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-gray-700 leading-relaxed">${formattedInstruction}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    formattedHTML += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Add tips section
+                if (tips.length > 0) {
+                    formattedHTML += `
+                        <div class="mb-8">
+                            <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl p-6 border border-amber-100">
+                                <h2 class="text-2xl font-bold text-amber-800 mb-4 flex items-center">
+                                    <span class="mr-2">💡</span> Pro Tips
+                                </h2>
+                                <div class="space-y-3">
+                    `;
+                    
+                    tips.forEach((tip, index) => {
+                        const formattedTip = formatBoldText(tip);
+                        formattedHTML += `
+                            <div class="tip-item flex items-start space-x-3 p-3 bg-white rounded-lg border border-amber-100" style="animation-delay: ${index * 0.1}s">
+                                <div class="flex-shrink-0 w-6 h-6 bg-amber-400 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">💡</span>
+                                </div>
+                                <p class="text-gray-700 text-sm leading-relaxed">${formattedTip}</p>
+                            </div>
+                        `;
+                    });
+                    
+                    formattedHTML += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // If no structured content found, display as formatted text
+                if (!ingredients.length && !instructions.length && !tips.length) {
+                    const formattedText = formatBoldText(rawText)
+                        .replace(/\n/g, '<br>')
+                        .replace(/•/g, '•');
+                    
+                    formattedHTML = `
+                        <div class="recipe-card">
+                            <div class="text-center mb-8">
+                                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-full mb-4">
+                                    <span class="text-3xl">🍽️</span>
+                                </div>
+                                <h1 class="text-3xl font-bold text-gray-900 mb-2">Your Custom Recipe</h1>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-6">
+                                <div class="text-gray-700 leading-relaxed whitespace-pre-line">${formattedText}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                formattedHTML += `</div>`;
+                formattedRecipeElement.innerHTML = formattedHTML;
+            }
+            
+            // Call formatRecipe when page loads
+            document.addEventListener('DOMContentLoaded', function() {
+                // Format recipe if it exists
+                if (document.getElementById('raw-recipe')) {
+                    formatRecipe();
+                }
+            });
             
             // Enhanced voice input with better feedback
             // This function is now defined above with the SpeechRecognition setup
@@ -480,32 +746,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Header Section -->
         <div class="text-center mb-12">
-            <div class="flex justify-center mb-6">
-                <div class="relative">
-                    <div class="w-24 h-24 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl animate-pulse">
-                        <span class="text-4xl">👨‍🍳</span>
-                    </div>
-                    <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-3 border-white animate-bounce flex items-center justify-center">
-                        <span class="text-white text-xs font-bold">AI</span>
-                    </div>
-                    <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-yellow-400 rounded-full border-2 border-white animate-pulse">
-                        <span class="text-xs">✨</span>
-                    </div>
-                </div>
-            </div>
-            <h1 class="recipe-title text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                🍽️ <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 animate-pulse">Magic</span> 
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500">Recipe</span> 
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 via-teal-500 to-cyan-500">Maker</span> ✨
-            </h1>
-            <div class="bg-gradient-to-r from-orange-100 to-pink-100 rounded-2xl p-6 max-w-3xl mx-auto border-2 border-orange-200 shadow-lg">
-                <p class="text-xl font-medium text-gray-800 mb-2">
-                    🗣️ <strong>Speak</strong> your ingredients • 📸 <strong>Show</strong> us your food • ✍️ <strong>Type</strong> what you want
-                </p>
-                <p class="text-lg text-gray-600">
-                    Our smart AI chef will create amazing recipes just for you! 🤖👨‍🍳
-                </p>
-            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Create Your Recipe</h1>
+            <p class="text-lg text-gray-600">
+                Add ingredients, upload an image, or use voice input to generate your recipe
+            </p>
         </div>
 
         <div class="grid lg:grid-cols-5 gap-8">
@@ -521,7 +765,6 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-3">
                                 <span class="flex items-center">
-                                    <span class="mr-2">🥘</span>
                                     Add ingredients one by one
                                 </span>
                             </label>
@@ -562,7 +805,6 @@
                                     class="voice-button w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium" 
                                     onclick="startVoiceInput()">
                                     <span class="flex items-center justify-center">
-                                        <span class="mr-2">🎤</span>
                                         Tap to Speak
                                     </span>
                                 </button>
@@ -573,7 +815,6 @@
                                     class="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium transform hover:scale-105" 
                                     onclick="showLoader()">
                                     <span class="flex items-center justify-center">
-                                        <span class="mr-2">✨</span>
                                         Make My Recipe!
                                     </span>
                                 </button>
@@ -594,7 +835,6 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-3" for="food_image">
                                 <span class="flex items-center">
-                                    <span class="mr-2">📸</span>
                                     Upload a food image
                                 </span>
                             </label>
@@ -632,7 +872,6 @@
                                     class="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium transform hover:scale-105" 
                                     onclick="showLoader()">
                                     <span class="flex items-center justify-center">
-                                        <span class="mr-2">🎨</span>
                                         Generate Recipe from Image!
                                     </span>
                                 </button>
@@ -647,52 +886,38 @@
             <div class="lg:col-span-3">
                 <div class="recipe-card bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-orange-100 p-8 min-h-[600px]">
                     {% if recipe %}
-                        <!-- Recipe Header -->
-                        <div class="text-center mb-8">
-                            <h2 class="text-3xl font-bold text-gray-900 mb-2">Your Custom Recipe</h2>
-                            <p class="text-gray-600">Created just for you by AI</p>
-                        </div>
-                        
                         <!-- Images Section -->
-                        <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        {% if image_url %}
+                        <div class="mb-8">
                             <!-- Show Uploaded Image (If Available) -->
-                            {% if image_url %}
-                                <div class="text-center fade-in">
-                                    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-4">
-                                        <p class="text-blue-700 text-sm mb-3 font-medium">📸 Your Uploaded Image</p>
-                                        <img src="{{ image_url }}" alt="Uploaded Food" class="w-full h-48 object-cover rounded-xl shadow-lg">
-                                    </div>
+                            <div class="text-center fade-in">
+                                <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-4">
+                                    <p class="text-blue-700 text-sm mb-3 font-medium">📸 Your Uploaded Image</p>
+                                    <img src="{{ image_url }}" alt="Uploaded Food" class="w-full h-64 object-cover rounded-xl shadow-lg">
                                 </div>
-                            {% endif %}
-                            
-                            <!-- Show AI Generated Image (If Available) -->
-                            {% if generated_image_url %}
-                                <div class="text-center fade-in">
-                                    <div class="bg-gradient-to-br from-purple-50 to-pink-100 rounded-2xl p-4">
-                                        <p class="text-purple-700 text-sm mb-3 font-medium">🤖 AI Generated Recipe Image</p>
-                                        <img src="{{ generated_image_url }}" alt="AI Generated Recipe" class="w-full h-48 object-cover rounded-xl shadow-lg">
-                                    </div>
-                                </div>
-                            {% endif %}
+                            </div>
                         </div>
+                        {% endif %}
                         
                         <!-- Recipe Content -->
-                        <div id="recipe" class="recipe-content slide-up prose prose-lg max-w-none compact-spacing">
-                            {{ recipe|safe }}
+                        <div id="recipe" class="recipe-content slide-up">
+                            <div id="formatted-recipe">
+                                <!-- This will be populated by JavaScript -->
+                            </div>
+                            
+                            <!-- Raw recipe for JavaScript processing (hidden) -->
+                            <div id="raw-recipe" style="display: none;">{{ recipe|safe }}</div>
                         </div>
                 
                         <!-- Action Buttons -->
                         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
                             <button id="listen-recipe-btn" onclick="toggleRecipeReading()" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
-                                <span class="mr-1">🔊</span>
                                 Listen to Recipe
                             </button>
                             <button onclick="shareRecipe()" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
-                                <span class="mr-1">📤</span>
                                 Share
                             </button>
                             <button onclick="saveRecipe()" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
-                                <span class="mr-1">💾</span>
                                 Save
                             </button>
                         </div>
@@ -759,8 +984,7 @@
                 <div class="loading-steps">
                     <p class="step active" id="step1">🤖 AI is analyzing your ingredients...</p>
                     <p class="step" id="step2">📝 Creating the perfect recipe...</p>
-                    <p class="step" id="step3">🎨 Generating beautiful recipe image...</p>
-                    <p class="step" id="step4">✨ Almost ready to serve!</p>
+                    <p class="step" id="step3">✨ Almost ready to serve!</p>
                 </div>
             </div>
         </div>
@@ -773,7 +997,7 @@
             loader.style.display = "flex";
             
             // Animate through steps
-            const steps = ['step1', 'step2', 'step3', 'step4'];
+            const steps = ['step1', 'step2', 'step3'];
             let currentStep = 0;
             
             const stepInterval = setInterval(() => {
