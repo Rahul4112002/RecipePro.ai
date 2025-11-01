@@ -715,27 +715,27 @@
     <!-- Navigation -->
     <nav class="bg-white/80 backdrop-blur-md shadow-sm border-b border-orange-100 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <a href="{% url 'home' %}" class="flex items-center space-x-3 group">
-                    <img class="h-10 w-10 rounded-full shadow-md group-hover:shadow-lg transition-shadow duration-200" src="{% static 'images/chef.png' %}" alt="RecipePro">
+            <div class="flex justify-between items-center py-3">
+                <a href="{% url 'home' %}" class="flex items-center space-x-2 group">
+                    <img class="h-8 w-8 sm:h-10 sm:w-10 rounded-full shadow-md group-hover:shadow-lg transition-shadow duration-200" src="{% static 'images/chef.png' %}" alt="RecipePro">
                     <div>
-                        <h1 class="text-xl font-bold text-gray-900">Recipe<span class="text-orange-500">Pro</span></h1>
-                        <p class="text-xs text-gray-500">AI Recipe Generator</p>
+                        <h1 class="text-lg sm:text-xl font-bold text-gray-900">Recipe<span class="text-orange-500">Pro</span></h1>
+                        <p class="text-xs text-gray-500 hidden sm:block">AI Recipe Generator</p>
                     </div>
                 </a>
                 
-                <div class="flex space-x-4">
-                    <a href="{% url 'saved_recipes' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex space-x-2 sm:space-x-4">
+                    <a href="{% url 'saved_recipes' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center text-sm sm:text-base">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                         </svg>
-                        Saved Recipes
+                        <span class="hidden sm:inline">Saved</span>
                     </a>
-                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center text-sm sm:text-base">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
-                        Back to Home
+                        <span class="hidden sm:inline">Home</span>
                     </a>
                 </div>
             </div>
@@ -743,44 +743,44 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-8">
         <!-- Header Section -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Create Your Recipe</h1>
-            <p class="text-lg text-gray-600">
-                Add ingredients, upload an image, or use voice input to generate your recipe
+        <div class="text-center mb-6 sm:mb-12">
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">Create Your Recipe</h1>
+            <p class="text-sm sm:text-base lg:text-lg text-gray-600 px-4">
+                Add ingredients, upload an image, or use voice input
             </p>
         </div>
 
-        <div class="grid lg:grid-cols-5 gap-8">
+        <div class="grid lg:grid-cols-5 gap-4 sm:gap-8">
             <!-- Input Form Sidebar -->
             <div class="lg:col-span-2">
-                <div class="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-orange-100 p-8 sticky top-24">
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6 text-center">Create Your Recipe</h2>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl border border-orange-100 p-4 sm:p-6 lg:p-8 lg:sticky lg:top-24">
+                    <h2 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6 text-center">Create Your Recipe</h2>
                     
-                    <form action="{% url 'recipe' %}" method="POST" enctype="multipart/form-data" onsubmit="showLoader()" class="space-y-6">
+                    <form action="{% url 'recipe' %}" method="POST" enctype="multipart/form-data" onsubmit="showLoader()" class="space-y-4 sm:space-y-6">
                         {% csrf_token %}
                         
                         <!-- Text Input Section -->
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
                                 <span class="flex items-center">
                                     Add ingredients one by one
                                 </span>
                             </label>
                             
                             <!-- Dynamic Ingredient Input -->
-                            <div class="space-y-3">
+                            <div class="space-y-2 sm:space-y-3">
                                 <!-- Ingredient Input Field -->
                                 <div class="relative">
                                     <input 
                                         type="text" 
                                         id="ingredient-input" 
                                         placeholder="Type ingredient and press Enter..."
-                                        class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-700 outline-none transition-all duration-200 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-100"
+                                        class="w-full rounded-lg sm:rounded-xl border-2 border-gray-200 bg-gray-50 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-700 outline-none transition-all duration-200 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-100"
                                         onkeypress="handleIngredientInput(event)"
                                     >
-                                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400">
+                                    <div class="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400">
                                         Press ↵
                                     </div>
                                 </div>
@@ -798,11 +798,11 @@
                                 ></textarea>
                             </div>
                             
-                            <div class="mt-3 space-y-3">
+                            <div class="mt-2 sm:mt-3 space-y-2 sm:space-y-3">
                                 <button 
                                     type="button" 
                                     id="mic-button" 
-                                    class="voice-button w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium" 
+                                    class="voice-button w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium" 
                                     onclick="startVoiceInput()">
                                     <span class="flex items-center justify-center">
                                         Tap to Speak
@@ -812,7 +812,7 @@
                                 <!-- Generate Recipe Button -->
                                 <button 
                                     type="submit"
-                                    class="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium transform hover:scale-105" 
+                                    class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg focus:outline-none transition-all duration-300 font-medium transform hover:scale-105" 
                                     onclick="showLoader()">
                                     <span class="flex items-center justify-center">
                                         Make My Recipe!
@@ -826,14 +826,14 @@
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-t border-gray-200"></div>
                             </div>
-                            <div class="relative flex justify-center text-sm">
-                                <span class="px-3 bg-white text-gray-500 font-medium">OR</span>
+                            <div class="relative flex justify-center text-xs sm:text-sm">
+                                <span class="px-2 sm:px-3 bg-white text-gray-500 font-medium">OR</span>
                             </div>
                         </div>
                         
                         <!-- Image Upload Section -->
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-3" for="food_image">
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3" for="food_image">
                                 <span class="flex items-center">
                                     Upload a food image
                                 </span>
@@ -884,16 +884,16 @@
 
             <!-- Recipe Display Area -->
             <div class="lg:col-span-3">
-                <div class="recipe-card bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-orange-100 p-8 min-h-[600px]">
+                <div class="recipe-card bg-white/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl border border-orange-100 p-4 sm:p-6 lg:p-8 min-h-[400px] sm:min-h-[600px]">
                     {% if recipe %}
                         <!-- Images Section -->
                         {% if image_url %}
-                        <div class="mb-8">
+                        <div class="mb-4 sm:mb-6 lg:mb-8">
                             <!-- Show Uploaded Image (If Available) -->
                             <div class="text-center fade-in">
-                                <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-4">
-                                    <p class="text-blue-700 text-sm mb-3 font-medium">📸 Your Uploaded Image</p>
-                                    <img src="{{ image_url }}" alt="Uploaded Food" class="w-full h-64 object-cover rounded-xl shadow-lg">
+                                <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+                                    <p class="text-blue-700 text-xs sm:text-sm mb-2 sm:mb-3 font-medium">📸 Your Uploaded Image</p>
+                                    <img src="{{ image_url }}" alt="Uploaded Food" class="w-full h-48 sm:h-64 object-cover rounded-lg sm:rounded-xl shadow-lg">
                                 </div>
                             </div>
                         </div>
@@ -910,48 +910,48 @@
                         </div>
                 
                         <!-- Action Buttons -->
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <button id="listen-recipe-btn" onclick="toggleRecipeReading()" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
+                        <div class="mt-4 sm:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+                            <button id="listen-recipe-btn" onclick="toggleRecipeReading()" class="flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
                                 Listen to Recipe
                             </button>
-                            <button onclick="shareRecipe()" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
+                            <button onclick="shareRecipe()" class="flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
                                 Share
                             </button>
-                            <button onclick="saveRecipe()" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
+                            <button onclick="saveRecipe()" class="flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg transition-all duration-300 font-medium">
                                 Save
                             </button>
                         </div>
                     {% else %}
                         <!-- Empty State -->
-                        <div class="text-center py-16">
-                            <div class="relative inline-block mb-8">
-                                <div class="w-32 h-32 bg-gradient-to-r from-orange-200 to-red-200 rounded-full flex items-center justify-center mx-auto">
-                                    <span class="text-6xl">🍽️</span>
+                        <div class="text-center py-8 sm:py-12 lg:py-16">
+                            <div class="relative inline-block mb-4 sm:mb-6 lg:mb-8">
+                                <div class="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-r from-orange-200 to-red-200 rounded-full flex items-center justify-center mx-auto">
+                                    <span class="text-4xl sm:text-6xl">🍽️</span>
                                 </div>
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center animate-bounce">
-                                    <span class="text-white text-sm">✨</span>
+                                <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 rounded-full flex items-center justify-center animate-bounce">
+                                    <span class="text-white text-xs sm:text-sm">✨</span>
                                 </div>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Ready to Cook Something Amazing?</h3>
-                            <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">Ready to Cook Something Amazing?</h3>
+                            <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 max-w-md mx-auto px-4">
                                 Enter ingredients, upload a food image, or use voice input to get started with your personalized recipe!
                             </p>
-                            <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto text-sm text-gray-500">
+                            <div class="grid grid-cols-3 gap-2 sm:gap-4 max-w-sm mx-auto text-xs sm:text-sm text-gray-500 px-4">
                                 <div class="text-center">
-                                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                                        <span class="text-xl">🥘</span>
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-1.5 sm:mb-2">
+                                        <span class="text-lg sm:text-xl">🥘</span>
                                     </div>
                                     Type ingredients
                                 </div>
                                 <div class="text-center">
-                                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                                        <span class="text-xl">📸</span>
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-1.5 sm:mb-2">
+                                        <span class="text-lg sm:text-xl">📸</span>
                                     </div>
                                     Upload photo
                                 </div>
                                 <div class="text-center">
-                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                                        <span class="text-xl">🎤</span>
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1.5 sm:mb-2">
+                                        <span class="text-lg sm:text-xl">🎤</span>
                                     </div>
                                     Use voice
                                 </div>
@@ -967,11 +967,11 @@
     <div id="loader" class="loading-overlay" style="display:none;">
         <div class="loading-content-modern">
             <div class="cooking-animation">
-                <div class="chef-hat">👨‍🍳</div>
+                <div class="chef-hat text-4xl sm:text-5xl lg:text-6xl">👨‍🍳</div>
                 <div class="cooking-tools">
-                    <span class="tool">🥄</span>
-                    <span class="tool">🍳</span>
-                    <span class="tool">🔥</span>
+                    <span class="tool text-xl sm:text-2xl lg:text-3xl">🥄</span>
+                    <span class="tool text-xl sm:text-2xl lg:text-3xl">🍳</span>
+                    <span class="tool text-xl sm:text-2xl lg:text-3xl">🔥</span>
                 </div>
             </div>
             <div class="loading-spinner">
@@ -979,12 +979,12 @@
                 <div class="spinner-ring"></div>
                 <div class="spinner-ring"></div>
             </div>
-            <div class="loading-text">
-                <h3 class="text-2xl font-bold text-white mb-3 animate-pulse">🧑‍🍳 Cooking Magic in Progress...</h3>
+            <div class="loading-text px-4">
+                <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 animate-pulse">🧑‍🍳 Cooking Magic in Progress...</h3>
                 <div class="loading-steps">
-                    <p class="step active" id="step1">🤖 AI is analyzing your ingredients...</p>
-                    <p class="step" id="step2">📝 Creating the perfect recipe...</p>
-                    <p class="step" id="step3">✨ Almost ready to serve!</p>
+                    <p class="step active text-sm sm:text-base" id="step1">🤖 AI is analyzing your ingredients...</p>
+                    <p class="step text-sm sm:text-base" id="step2">📝 Creating the perfect recipe...</p>
+                    <p class="step text-sm sm:text-base" id="step3">✨ Almost ready to serve!</p>
                 </div>
             </div>
         </div>

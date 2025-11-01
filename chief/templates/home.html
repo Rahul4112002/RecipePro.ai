@@ -16,30 +16,31 @@
 <body class="bg-gradient-to-br from-orange-50 via-white to-amber-50 min-h-screen">
     <!-- Navigation -->
     <nav class="relative z-10 bg-white/80 backdrop-blur-md shadow-sm border-b border-orange-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-3">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+            <div class="flex justify-between items-center py-3 sm:py-4">
+                <div class="flex items-center space-x-2 sm:space-x-3">
                     <div class="relative">
-                        <img class="h-12 w-12 rounded-full shadow-lg ring-2 ring-orange-200" src="{% static 'images/chef.png' %}" alt="RecipePro">
-                        <div class="absolute -top-1 -right-1 h-4 w-4 bg-green-400 rounded-full border-2 border-white"></div>
+                        <img class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full shadow-lg ring-2 ring-orange-200" src="{% static 'images/chef.png' %}" alt="RecipePro">
+                        <div class="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 h-3 w-3 sm:h-4 sm:w-4 bg-green-400 rounded-full border-2 border-white"></div>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Recipe<span class="text-orange-500">Pro</span></h1>
-                        <p class="text-xs text-gray-500">AI-Powered Cooking</p>
+                        <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">Recipe<span class="text-orange-500">Pro</span></h1>
+                        <p class="text-xs text-gray-500 hidden sm:block">AI-Powered Cooking</p>
                     </div>
                 </div>
                 
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="#features" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium">Features</a>
-                    <a href="#how-it-works" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium">How It Works</a>
+                <div class="flex items-center gap-2 sm:gap-4 md:gap-6">
+                    <a href="#features" class="hidden lg:block text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium">Features</a>
+                    <a href="#how-it-works" class="hidden lg:block text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium">How It Works</a>
                     <a href="{% url 'saved_recipes' %}" class="text-gray-600 hover:text-orange-500 transition-colors duration-200 font-medium flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                         </svg>
-                        Saved Recipes
+                        <span class="ml-1 hidden sm:inline">Saved</span>
                     </a>
-                    <a href="{% url 'recipe' %}" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
-                        Start Cooking
+                    <a href="{% url 'recipe' %}" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 lg:px-6 lg:py-2.5 rounded-full text-sm sm:text-base font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+                        <span class="hidden sm:inline">Start Cooking</span>
+                        <span class="sm:hidden">Start</span>
                     </a>
                 </div>
             </div>
@@ -47,82 +48,82 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden py-20 lg:py-32">
+    <section class="relative overflow-hidden py-12 sm:py-16 lg:py-24">
         <!-- Background decoration -->
         <div class="absolute inset-0 bg-gradient-to-r from-orange-100/50 to-amber-100/50"></div>
-        <div class="absolute top-10 left-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div class="absolute top-20 right-10 w-96 h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
+        <div class="absolute top-10 left-10 w-48 h-48 sm:w-72 sm:h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
+        <div class="absolute top-20 right-10 w-64 h-64 sm:w-96 sm:h-96 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
                 <div class="lg:col-span-6">
                     <div class="text-center lg:text-left">
                         <!-- Badge -->
-                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-orange-100 text-orange-800 text-sm font-medium mb-6">
+                        <div class="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-orange-100 text-orange-800 text-xs sm:text-sm font-medium mb-4 sm:mb-6">
                             Powered by Advanced AI
                         </div>
                         
                         <!-- Main Headline -->
-                        <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                        <h1 class="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2 sm:px-0">
                             Turn <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">Ingredients</span> into
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">Magic</span>
                         </h1>
                         
                         <!-- Subtitle -->
-                        <p class="text-xl text-gray-600 mb-8 max-w-2xl">
+                        <p class="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl px-4 sm:px-0">
                             Discover personalized recipes instantly! Just tell us what you have, upload a food photo, or speak your cravings. 
                             Our AI chef creates perfect recipes with beautiful images, just for you.
                         </p>
                         
                         <!-- CTA Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start">
-                            <a href="{% url 'recipe' %}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start px-4 sm:px-0">
+                            <a href="{% url 'recipe' %}" class="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                                 Generate Recipe Now
-                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                 </svg>
                             </a>
                             
-                            <a href="#how-it-works" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-700 bg-white rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:text-orange-600 transition-all duration-200">
+                            <a href="#how-it-works" class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-gray-700 bg-white rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:text-orange-600 transition-all duration-200">
                                 Learn How
                             </a>
                         </div>
                         
                         <!-- Stats -->
-                        <div class="mt-12 grid grid-cols-3 gap-6 text-center lg:text-left">
+                        <div class="mt-8 sm:mt-12 grid grid-cols-3 gap-4 sm:gap-6 text-center lg:text-left px-4 sm:px-0">
                             <div>
-                                <div class="text-2xl font-bold text-gray-900">10K+</div>
-                                <div class="text-sm text-gray-600">Recipes Generated</div>
+                                <div class="text-xl sm:text-2xl font-bold text-gray-900">10K+</div>
+                                <div class="text-xs sm:text-sm text-gray-600">Recipes Generated</div>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold text-gray-900">95%</div>
-                                <div class="text-sm text-gray-600">Success Rate</div>
+                                <div class="text-xl sm:text-2xl font-bold text-gray-900">95%</div>
+                                <div class="text-xs sm:text-sm text-gray-600">Success Rate</div>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold text-gray-900">5⭐</div>
-                                <div class="text-sm text-gray-600">User Rating</div>
+                                <div class="text-xl sm:text-2xl font-bold text-gray-900">5⭐</div>
+                                <div class="text-xs sm:text-sm text-gray-600">User Rating</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Hero Image -->
-                <div class="mt-12 lg:mt-0 lg:col-span-6">
+                <div class="mt-8 sm:mt-12 lg:mt-0 lg:col-span-6 px-4 sm:px-0">
                     <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-400 rounded-3xl transform rotate-3 opacity-20"></div>
-                        <div class="relative bg-white rounded-3xl shadow-2xl p-8 transform hover:rotate-1 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-400 rounded-2xl sm:rounded-3xl transform rotate-3 opacity-20"></div>
+                        <div class="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 transform hover:rotate-1 transition-transform duration-300">
                             <img 
                                 src="{% static 'images/chef1.png' %}" 
                                 alt="AI Chef Assistant" 
-                                class="w-full h-auto rounded-2xl"
+                                class="w-full h-auto rounded-xl sm:rounded-2xl"
                             />
                             
                             <!-- Floating elements -->
-                            <div class="absolute -top-4 -right-4 bg-green-500 text-white p-3 rounded-full shadow-lg animate-bounce">
-                                <span class="text-xl">✨</span>
+                            <div class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 bg-green-500 text-white p-2 sm:p-3 rounded-full shadow-lg animate-bounce">
+                                <span class="text-base sm:text-xl">✨</span>
                             </div>
-                            <div class="absolute -bottom-4 -left-4 bg-orange-500 text-white p-3 rounded-full shadow-lg animate-pulse">
-                                <span class="text-xl">🍽️</span>
+                            <div class="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 bg-orange-500 text-white p-2 sm:p-3 rounded-full shadow-lg animate-pulse">
+                                <span class="text-base sm:text-xl">🍽️</span>
                             </div>
                         </div>
                     </div>
@@ -132,83 +133,84 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
+    <section id="features" class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Incredible Features</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Experience the future of cooking with our AI-powered recipe generation system</p>
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">Incredible Features</h2>
+                <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">Experience the future of cooking with our AI-powered recipe generation system</p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 <!-- Feature 1 -->
-                <div class="group relative bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="group relative bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative">
-                        <div class="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-orange-500 rounded-lg sm:rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
                             🎤
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Voice Input</h3>
-                        <p class="text-gray-600">Simply speak your ingredients or dish preferences. Our advanced speech recognition understands you perfectly.</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">Voice Input</h3>
+                        <p class="text-sm sm:text-base text-gray-600">Simply speak your ingredients or dish preferences. Our advanced speech recognition understands you perfectly.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="group relative bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="group relative bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative">
-                        <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
                             📸
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Image Recognition</h3>
-                        <p class="text-gray-600">Upload any food image and get an instant recipe. Our AI analyzes the dish and recreates the perfect recipe.</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">Image Recognition</h3>
+                        <p class="text-sm sm:text-base text-gray-600">Upload any food image and get an instant recipe. Our AI analyzes the dish and recreates the perfect recipe.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="group relative bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="group relative bg-gradient-to-br from-green-50 to-green-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative">
-                        <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-lg sm:rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
                             🖼️
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">AI-Generated Images</h3>
-                        <p class="text-gray-600">Every recipe comes with a beautiful, AI-generated image showing exactly how your dish will look.</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">AI-Generated Images</h3>
+                        <p class="text-sm sm:text-base text-gray-600">Every recipe comes with a beautiful, AI-generated image showing exactly how your dish will look.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 4 -->
-                <div class="group relative bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="group relative bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative">
-                        <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
                             🔊
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Audio Recipes</h3>
-                        <p class="text-gray-600">Listen to your recipes being read aloud while you cook. Perfect for hands-free cooking experience.</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">Audio Recipes</h3>
+                        <p class="text-sm sm:text-base text-gray-600">Listen to your recipes being read aloud while you cook. Perfect for hands-free cooking experience.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 5 -->
-                <div class="group relative bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="group relative bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative">
-                        <div class="w-16 h-16 bg-yellow-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-500 rounded-lg sm:rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
                             📤
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Easy Sharing</h3>
-                        <p class="text-gray-600">Share your favorite recipes instantly via social media, messaging, or save them for later use.</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">Easy Sharing</h3>
+                        <p class="text-sm sm:text-base text-gray-600">Share your favorite recipes instantly via social media, messaging, or save them for later use.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 6 -->
-                <div class="group relative bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <!-- Feature 6 -->
+                <div class="group relative bg-gradient-to-br from-red-50 to-red-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative">
-                        <div class="w-16 h-16 bg-red-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-red-500 rounded-lg sm:rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
                             ⚡
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Instant Results</h3>
-                        <p class="text-gray-600">Get complete recipes with ingredients, instructions, and cooking times in seconds, not minutes.</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">Instant Results</h3>
+                        <p class="text-sm sm:text-base text-gray-600">Get complete recipes with ingredients, instructions, and cooking times in seconds, not minutes.</p>
                     </div>
                 </div>
             </div>
@@ -216,113 +218,113 @@
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="how-it-works" class="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Three simple steps to culinary perfection</p>
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">How It Works</h2>
+                <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">Three simple steps to culinary perfection</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center group">
-                    <div class="relative mb-8">
-                        <div class="w-24 h-24 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="text-center group px-4">
+                    <div class="relative mb-6 sm:mb-8">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-bold mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300">
                             1
                         </div>
                         <div class="absolute -inset-4 bg-orange-200 rounded-full opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Input Your Preferences</h3>
-                    <p class="text-gray-600">Tell us what ingredients you have, upload a food image, or speak your cravings using voice input.</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Input Your Preferences</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Tell us what ingredients you have, upload a food image, or speak your cravings using voice input.</p>
                 </div>
                 
-                <div class="text-center group">
-                    <div class="relative mb-8">
-                        <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div class="text-center group px-4">
+                    <div class="relative mb-6 sm:mb-8">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-bold mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300">
                             2
                         </div>
                         <div class="absolute -inset-4 bg-blue-200 rounded-full opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">AI Processes</h3>
-                    <p class="text-gray-600">Our advanced AI analyzes your input and generates a complete recipe with detailed instructions and cooking times.</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">AI Processes</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Our advanced AI analyzes your input and generates a complete recipe with detailed instructions and cooking times.</p>
                 </div>
                 
-                <div class="text-center group">
-                    <div class="relative mb-8">
-                        <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div class="text-center group px-4">
+                    <div class="relative mb-6 sm:mb-8">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-bold mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300">
                             3
                         </div>
                         <div class="absolute -inset-4 bg-green-200 rounded-full opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Cook & Enjoy</h3>
-                    <p class="text-gray-600">Follow the detailed recipe, listen to audio instructions, and enjoy your perfectly crafted meal!</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Cook & Enjoy</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Follow the detailed recipe, listen to audio instructions, and enjoy your perfectly crafted meal!</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Developer Section -->
-    <section class="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Meet the Developer</h2>
-                <p class="text-xl text-gray-600">Passionate about creating innovative solutions through AI and web development</p>
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">Meet the Developer</h2>
+                <p class="text-base sm:text-lg lg:text-xl text-gray-600 px-4">Passionate about creating innovative solutions through AI and web development</p>
             </div>
             
-            <div class="bg-white rounded-3xl shadow-2xl p-8 lg:p-12">
-                <div class="flex flex-col lg:flex-row items-center gap-8">
+            <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12">
+                <div class="flex flex-col lg:flex-row items-center gap-6 sm:gap-8">
                     <!-- Developer Avatar -->
                     <div class="flex-shrink-0">
                         <div class="relative">
-                            <div class="w-32 h-32 lg:w-40 lg:h-40 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl">
-                                <span class="text-5xl lg:text-6xl">👨‍💻</span>
+                            <div class="w-28 h-28 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl">
+                                <span class="text-4xl sm:text-5xl lg:text-6xl">👨‍💻</span>
                             </div>
-                            <div class="absolute -bottom-2 -right-2 w-12 h-12 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
-                                <span class="text-white text-lg">✨</span>
+                            <div class="absolute -bottom-2 -right-2 w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
+                                <span class="text-white text-base sm:text-lg">✨</span>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Developer Info -->
                     <div class="flex-1 text-center lg:text-left">
-                        <h3 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Rahul Chauhan</h3>
-                        <p class="text-lg text-purple-600 font-semibold mb-4">Full Stack Developer & AI Enthusiast</p>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
+                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Rahul Chauhan</h3>
+                        <p class="text-base sm:text-lg text-purple-600 font-semibold mb-3 sm:mb-4">Full Stack Developer & AI Enthusiast</p>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed px-2 sm:px-0">
                             I'm passionate about leveraging cutting-edge AI technologies to solve real-world problems. 
                             RecipePro combines my love for cooking and technology, making culinary creativity accessible to everyone 
                             through the power of artificial intelligence.
                         </p>
                         
                         <!-- Tech Stack -->
-                        <div class="mb-6">
-                            <h4 class="text-sm font-semibold text-gray-900 mb-3">Tech Stack Used:</h4>
-                            <div class="flex flex-wrap justify-center lg:justify-start gap-2">
-                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Django</span>
-                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Python</span>
-                                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">LangChain</span>
-                                <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">Groq API</span>
-                                <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">TailwindCSS</span>
-                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">JavaScript</span>
+                        <div class="mb-4 sm:mb-6">
+                            <h4 class="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Tech Stack Used:</h4>
+                            <div class="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2">
+                                <span class="px-2 py-1 sm:px-3 sm:py-1 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">Django</span>
+                                <span class="px-2 py-1 sm:px-3 sm:py-1 bg-green-100 text-green-800 rounded-full text-xs sm:text-sm font-medium">Python</span>
+                                <span class="px-2 py-1 sm:px-3 sm:py-1 bg-purple-100 text-purple-800 rounded-full text-xs sm:text-sm font-medium">LangChain</span>
+                                <span class="px-2 py-1 sm:px-3 sm:py-1 bg-orange-100 text-orange-800 rounded-full text-xs sm:text-sm font-medium">Groq API</span>
+                                <span class="px-2 py-1 sm:px-3 sm:py-1 bg-red-100 text-red-800 rounded-full text-xs sm:text-sm font-medium">TailwindCSS</span>
+                                <span class="px-2 py-1 sm:px-3 sm:py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">JavaScript</span>
                             </div>
                         </div>
                         
                         <!-- Social Links -->
-                        <div class="flex flex-wrap justify-center lg:justify-start gap-4">
-                            <a href="https://github.com/Rahul4112002" target="_blank" class="group flex items-center px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
-                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <div class="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-2 sm:gap-4">
+                            <a href="https://github.com/Rahul4112002" target="_blank" class="group flex items-center justify-center px-3 py-2 sm:px-4 sm:py-2 bg-gray-900 text-white rounded-lg text-sm sm:text-base hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                                 </svg>
                                 GitHub
                             </a>
                             
-                            <a href="https://rahul4112.me" target="_blank" class="group flex items-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <a href="https://rahul4112.me" target="_blank" class="group flex items-center justify-center px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-sm sm:text-base hover:shadow-lg transition-all duration-200 transform hover:scale-105">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9"/>
                                 </svg>
                                 Portfolio
                             </a>
                             
-                            <a href="https://linkedin.com/in/rahul-chauhan-932522230" target="_blank" class="group flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 transform hover:scale-105">
-                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="https://linkedin.com/in/rahul-chauhan-932522230" target="_blank" class="group flex items-center justify-center px-3 py-2 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg text-sm sm:text-base hover:bg-blue-700 transition-all duration-200 transform hover:scale-105">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                                 </svg>
                                 LinkedIn
@@ -332,23 +334,23 @@
                 </div>
                 
                 <!-- Project Stats -->
-                <div class="mt-8 pt-8 border-t border-gray-200">
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                        <div class="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
-                            <div class="text-2xl font-bold text-blue-600">AI-Powered</div>
-                            <div class="text-sm text-gray-600">Recipe Generation</div>
+                <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 text-center">
+                        <div class="p-3 sm:p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg sm:rounded-xl">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-blue-600">AI-Powered</div>
+                            <div class="text-xs sm:text-sm text-gray-600">Recipe Generation</div>
                         </div>
-                        <div class="p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
-                            <div class="text-2xl font-bold text-green-600">Voice & Image</div>
-                            <div class="text-sm text-gray-600">Input Support</div>
+                        <div class="p-3 sm:p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg sm:rounded-xl">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-green-600">Voice & Image</div>
+                            <div class="text-xs sm:text-sm text-gray-600">Input Support</div>
                         </div>
-                        <div class="p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
-                            <div class="text-2xl font-bold text-purple-600">Real-time</div>
-                            <div class="text-sm text-gray-600">Processing</div>
+                        <div class="p-3 sm:p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg sm:rounded-xl">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-purple-600">Real-time</div>
+                            <div class="text-xs sm:text-sm text-gray-600">Processing</div>
                         </div>
-                        <div class="p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl">
-                            <div class="text-2xl font-bold text-orange-600">Open Source</div>
-                            <div class="text-sm text-gray-600">& Free to Use</div>
+                        <div class="p-3 sm:p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg sm:rounded-xl">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-orange-600">Open Source</div>
+                            <div class="text-xs sm:text-sm text-gray-600">& Free to Use</div>
                         </div>
                     </div>
                 </div>
@@ -357,44 +359,44 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-orange-500 to-red-500">
+    <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-orange-500 to-red-500">
         <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Ready to Create Something Delicious?</h2>
-            <p class="text-xl text-orange-100 mb-8">Join thousands of home cooks who trust RecipePro for their culinary adventures</p>
-            <a href="{% url 'recipe' %}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-orange-600 bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">Ready to Create Something Delicious?</h2>
+            <p class="text-base sm:text-lg lg:text-xl text-orange-100 mb-6 sm:mb-8">Join thousands of home cooks who trust RecipePro for their culinary adventures</p>
+            <a href="{% url 'recipe' %}" class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-semibold text-orange-600 bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Start Cooking Now
             </a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-16">
+    <footer class="bg-gray-900 text-white py-10 sm:py-12 lg:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
                 <!-- Brand Section -->
                 <div class="md:col-span-2">
-                    <div class="flex items-center space-x-3 mb-6">
+                    <div class="flex items-center space-x-3 mb-4 sm:mb-6">
                         <div>
-                            <h3 class="text-2xl font-bold">Recipe<span class="text-orange-500">Pro</span></h3>
-                            <p class="text-sm text-gray-400">AI-Powered Cooking Revolution</p>
+                            <h3 class="text-xl sm:text-2xl font-bold">Recipe<span class="text-orange-500">Pro</span></h3>
+                            <p class="text-xs sm:text-sm text-gray-400">AI-Powered Cooking Revolution</p>
                         </div>
                     </div>
-                    <p class="text-gray-300 mb-6 max-w-md leading-relaxed">
+                    <p class="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 max-w-md leading-relaxed">
                         Transform your cooking experience with AI-powered recipe generation. Create, share, and enjoy amazing dishes effortlessly with voice input, image recognition, and instant recipe creation.
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/Rahul4112002" target="_blank" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-orange-500 transition-all duration-200 transform hover:scale-110">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="https://github.com/Rahul4112002" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg sm:rounded-xl flex items-center justify-center hover:bg-orange-500 transition-all duration-200 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                             </svg>
                         </a>
-                        <a href="https://linkedin.com/in/rahul-chauhan-932522230" target="_blank" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all duration-200 transform hover:scale-110">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <a href="https://linkedin.com/in/rahul-chauhan-932522230" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg sm:rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all duration-200 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                         </a>
-                        <a href="https://rahul4112.me" target="_blank" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-purple-500 transition-all duration-200 transform hover:scale-110">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="https://rahul4112.me" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg sm:rounded-xl flex items-center justify-center hover:bg-purple-500 transition-all duration-200 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9"/>
                             </svg>
                         </a>
