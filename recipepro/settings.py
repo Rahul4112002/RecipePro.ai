@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-b9toeezhz=t_z@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['recipepro-ai.onrender.com', '*.onrender.com', 'localhost', '127.0.0.1', '.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['recipepro-ai.onrender.com', '*.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
