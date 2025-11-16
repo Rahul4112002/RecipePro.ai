@@ -1,6 +1,9 @@
 
 
-https://github.com/user-attachments/assets/3cbc91e4-3244-44bb-9790-ff283f553536
+
+https://github.com/user-attachments/assets/0bc1e910-a272-4ae6-bae5-5bc6291f79fa
+
+
 
 
 # 🍽️ RecipePro - AI-Powered Recipe Generator
