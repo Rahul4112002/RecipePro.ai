@@ -3,9 +3,6 @@
 
 https://github.com/user-attachments/assets/0bc1e910-a272-4ae6-bae5-5bc6291f79fa
 
-//this is dummy commit
-
-
 # 🍽️ RecipePro - AI-Powered Recipe Generator
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
