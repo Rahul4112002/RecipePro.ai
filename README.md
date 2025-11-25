@@ -3,7 +3,7 @@
 
 https://github.com/user-attachments/assets/0bc1e910-a272-4ae6-bae5-5bc6291f79fa
 
-# 🍽️ RecipePro - AI-Powered Recipe Generator
+#  RecipePro - AI-Powered Recipe Generator
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![Django](https://img.shields.io/badge/Django-5.1.4-green.svg)](https://djangoproject.com)
